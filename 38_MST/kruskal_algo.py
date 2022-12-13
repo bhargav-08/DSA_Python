@@ -57,3 +57,6 @@ g.addEdge("E", "A", 15)
 g.addEdge("E", "C", 20)
 
 g.kruskalAlgo()
+
+
+# This is also added 

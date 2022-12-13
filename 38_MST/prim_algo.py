@@ -43,3 +43,5 @@ edges = [[0, 10, 20, 0, 0],
 
 g = Graph(5,nodes,edges)
 g.primsAlgo()
+
+# This is demo 
