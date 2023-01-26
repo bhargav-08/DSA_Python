@@ -22,8 +22,28 @@ def kandaneAlog(arr):
     return maxsum
 
 
+def circularKandane(nums):
+    maxsum = nums[0]
+    currsum = 0
+    n = len(nums)
+    second = False
+
+    for i in range(2*n):
+        if i >= n:
+            second = True
+        currsum += nums[i % n]
+        maxsum = max(maxsum, currsum)
+        if currsum < 0:
+            if second:
+                break
+            currsum = 0
+
+    return maxsum
+
+
 arr = [-5, 4, 6, -3, 4, -1, 100]
 arr = [1, 2, 3, -2, 5]
 arr = [-10, -2, -3, -4]
-# print(maxSubArray(arr))
-print(kandaneAlog(arr))
+arr = [5, -3, 5]
+
+print(circularKandane(arr))
