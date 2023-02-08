@@ -13,4 +13,10 @@ def isAlienSorted1(words, order):
 words = ["hello", "leetcode", "other", "another"]
 order = "hlabcdefgijkmnopqrstuvwxyz"
 
-print(isAlienSorted(words, order))
+# print(isAlienSorted(words, order))
+
+l1 = [1, 2, 3]
+l2 = [1, 2, 3, 4]
+
+
+print(l1 > l2)
