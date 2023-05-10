@@ -1,3 +1,4 @@
+import collections
 g = {
     "A": ["B", "C"],
     "B": ["E", "D"],
@@ -6,8 +7,6 @@ g = {
     "E": ["C", "D", "B"],
     "F": ["D", "E"]
 }
-
-import collections
 
 
 def bfs(node):

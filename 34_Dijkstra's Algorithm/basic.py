@@ -1,63 +1,78 @@
-from collections import defaultdict
+
+# def djisktra(graph, source):
+#     V = len(graph)
+#     vis = [False]*V
+#     val = [float("inf")]*V
+#     parent = [-1]*V
+
+#     def selectMinVertex():
+#         node, minVal = -1, float("inf")
+
+#         for i in range(V):
+#             if not vis[i] and val[i] < minVal:
+#                 node = i
+#                 minVal = val[i]
+
+#         return node
+
+#     # setting source as min val and its parent
+#     val[source] = 0
+#     parent[source] = -1
+
+#     for i in range(V):
+#         U = selectMinVertex()
+#         vis[U] = True
+
+#         # relaxing edges
+#         for j in range(V):
+#             if not vis[j] and graph[U][j] != 0 and val[j] > val[U]+graph[U][j]:
+#                 val[j] = val[U]+graph[U][j]
+#                 parent[j] = U
+
+#     # Print the val
+#     print(f"{val= }")
+#     print(f"{parent= }")
 
 
-class Graph:
-    def __init__(self) -> None:
-        self.nodes = set()
-        self.distance = {}
-        self.edges = defaultdict(list)
+from heapq import heappop, heappush
 
-    def addNode(self,node):
-        self.nodes.add(node)
 
-    def addEdge(self,fromNode,toNode,distance):
-        self.edges[fromNode].append(toNode)
-        self.distance[(fromNode,toNode)] = distance
+def djisktra(graph, source):
+    V = len(graph)
+    vis = [False]*V
+    val = [float("inf")]*V
+    parent = [-1]*V
 
-def dijkstra(graph,inital):
-    visited = {inital:0}
-    nodes = set(graph.nodes)
-    path = defaultdict(list)
+    # setting source as min val and its parent
+    val[source] = 0
+    parent[source] = -1
+    pq = []
+    heappush(pq, (0, source))
 
-    while nodes:
-        minNode = None
-        for node in nodes:
-            if node in visited:
-                if minNode is None:
-                    minNode = node
-                elif visited[node] <visited[minNode]:
-                    minNode = node
-        if minNode is None:
-            break
+    while pq:
+        U, dist = heappop(pq)
 
-        nodes.remove(minNode)
-        weight = visited[minNode]
+        # relaxing edges
+        if not vis[U]:
+            for j in range(V):
+                if not vis[j] and graph[U][j] != 0 and val[j] > dist + graph[U][j]:
+                    val[j] = dist+graph[U][j]
+                    heappush(pq, (j, val[j]))
+                    parent[j] = U
+        vis[U] = True
 
-        for edge in graph.edges[minNode]:
-            currentWeight = weight + graph.distance[(minNode,edge)]
-            if edge not in visited or visited[edge] > currentWeight:
-                visited[edge] = currentWeight
-                path[edge].append(minNode)
+    # Print the val
+    print(f"{val= }")
+    print(f"{parent= }")
 
-    return visited,path
 
-customGraph = Graph()
-customGraph.addNode("A")
-customGraph.addNode("B")
-customGraph.addNode("C")
-customGraph.addNode("D")
-customGraph.addNode("E")
-customGraph.addNode("F")
-customGraph.addNode("G")
-customGraph.addEdge("A", "B", 2)
-customGraph.addEdge("A", "C", 5)
-customGraph.addEdge("B", "C", 6)
-customGraph.addEdge("B", "D", 1)
-customGraph.addEdge("B", "E", 3)
-customGraph.addEdge("C", "F", 8)
-customGraph.addEdge("D", "E", 4)
-customGraph.addEdge("E", "G", 9)
-customGraph.addEdge("F", "G", 7)
+graph = [
+    [0, 1, 4, 0, 0, 0],
+    [1, 0, 4, 2, 7, 0],
+    [4, 4, 0, 3, 5, 0],
+    [0, 2, 3, 0, 4, 6],
+    [0, 7, 5, 4, 0, 7],
+    [0, 0, 0, 6, 7, 0]
+]
 
-print(dijkstra(customGraph, "A"))
-
+djisktra(graph, 0)
