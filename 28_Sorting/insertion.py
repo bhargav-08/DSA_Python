@@ -1,8 +1,3 @@
-
-
-from bisect import insort_right
-
-
 def insertion(arr):
     for i in range(1,len(arr)-1):
         j = i-1
